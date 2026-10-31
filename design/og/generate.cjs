@@ -47,7 +47,7 @@ out += text("KOVANÉ BRÁNY", { x: 80, y: 305, size: 112, weight: 900, spacing: 
 const l2a = text("A PLOTY ", { x: 80, y: 418, size: 112, weight: 900, spacing: -1, fill: "#F3F1EC" });
 const l2b = text("NA MIERU", { x: 80 + l2a.width - 1, y: 418, size: 112, weight: 900, spacing: -1, fill: G });
 out += l2a.svg + l2b.svg;
-out += text("Kovovýroba Prečín · z kovu aj antikoru · zameranie zdarma", { x: 82, y: 490, size: 34, weight: 400, spacing: 2, fill: "#A4ACAF" }).svg;
+out += text("Kovovýroba Prečín", { x: 82, y: 490, size: 34, weight: 400, spacing: 2, fill: "#A4ACAF" }).svg;
 out += text("0911 782 251", { x: 80, y: 590, size: 40, weight: 700, spacing: 4, fill: G }).svg;
 out += text("KOVOCER.EU", { x: 1120, y: 590, size: 32, weight: 400, spacing: 4, fill: "#F3F1EC", anchor: "end" }).svg;
 
@@ -57,7 +57,6 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
 <g transform="translate(700 40) scale(8.4)" opacity=".13">${inner}</g>
 <g transform="translate(80 64) scale(1.3)">${inner}</g>
 ${out}
-<rect x="80" y="540" width="60" height="4" fill="${G}"/>
 </svg>`;
 fs.writeFileSync(path.join(root, "design/og/og.svg"), svg);
 sharp(Buffer.from(svg), { density: 72 }).png({ compressionLevel: 9 }).toFile(path.join(root, "public/og-image.png")).then(() => console.log("OK"));
