@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import arch from "../assets/photos/posuvna-brana-obluk-kamenne-stlpiky.jpg";
+import { button } from "../data/site";
+
+const facts = [
+  { label: "Povrch", value: "žiarový zinok" },
+  { label: "Materiál", value: "kov, antikor" },
+  { label: "Zameranie", value: "zdarma" },
+];
+---
+
+<section id="galeria" class="relative isolate scroll-mt-[calc(4.5rem-15px)] bg-bg pb-20 text-ink md:scroll-mt-[calc(5.5rem-15px)]">
+  <figure class="relative isolate" data-reveal>
+    <Image
+      src={arch}
+      alt="Kovaná posuvná vjazdová brána s oblúkom medzi kamennými stĺpikmi"
+      class="h-[70vh] min-h-96 w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-linear-to-r from-bg/90 via-bg/40 to-transparent"></div>
+    <div class="absolute inset-0 flex items-end md:items-center">
+      <div class="mx-auto w-full max-w-container px-6 pb-8 md:pb-0">
+        <div class="max-w-xl rounded-2xl bg-white/5 p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] ring-1 ring-white/10 backdrop-blur-xl md:p-12">
+          <p class="font-display text-xs tracking-[0.32em] text-accent">Fotogaléria kovaných brán a plotov</p>
+          <h2 class="mt-4 font-display text-4xl leading-[1.12] font-bold text-ink uppercase md:text-6xl">Naša práca hovorí za nás</h2>
+          <p class="mt-5 leading-relaxed text-ink/80">
+            Pozrite si hotové brány, ploty a zábradlia z našej dielne v Prečíne. Každý kus vyrábame z kovu alebo antikoru, žiarovo pozinkujeme a natrieme, aby vydržal v každom počasí.
+          </p>
+          <a
+            href="/#dopyt"
+            class:list={[button, "mt-8 px-6 py-3.5 text-sm shadow-[0_0_40px_-6px_rgba(201,181,126,0.65)]"]}
+            >Chcem bezplatné zameranie →</a
+          >
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div class="relative z-10 mx-auto mt-6 max-w-container px-6 sm:-mt-14">
+    <dl
+      class="grid grid-cols-1 divide-y divide-white/10 overflow-hidden rounded-2xl bg-surface/90 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] ring-1 ring-white/10 backdrop-blur-xl sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+      data-reveal
+    >
+      {facts.map((fact) => (
+        <div class="flex items-center justify-between gap-4 px-5 py-4 sm:block sm:p-6 md:p-8">
+          <dt class="text-[0.7rem] tracking-[0.24em] text-muted uppercase sm:text-xs sm:tracking-[0.28em]">{fact.label}</dt>
+          <dd class="text-right font-display text-xl font-bold text-accent uppercase sm:mt-2 sm:text-left sm:text-2xl md:text-3xl">{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

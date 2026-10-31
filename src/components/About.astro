@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import about from "../assets/photos/kovana-posuvna-brana-kamenne-stlpiky.webp";
+
+const points = [
+  "výroba z kovu aj antikoru",
+  "každá zákazka na mieru podľa vašich rozmerov a predstáv",
+  "žiarové pozinkovanie a náter proti korózii",
+  "predaj a montáž pohonov brán NICE, KEY",
+];
+---
+
+<section id="o-nas" class="scroll-mt-[calc(4.5rem-15px)] bg-[#F0F0F0] py-20 text-bg md:scroll-mt-[calc(5.5rem-15px)] md:py-28">
+  <div class="mx-auto max-w-container px-6">
+    <div class="grid items-center gap-12 md:grid-cols-2 md:gap-20" data-reveal>
+      <div class="relative">
+        <Image
+          src={about}
+          alt="Kovaná posuvná brána s ozdobným prvkom a oplotenie s kamennými stĺpikmi"
+          class="relative aspect-[4/5] w-full rounded-2xl object-cover shadow-card"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <h2 class="font-display text-4xl leading-[1.12] font-bold text-bg md:text-6xl">Kovovýroba na mieru v Prečíne</h2>
+        <div class="mt-6 space-y-4 text-lg leading-relaxed text-[#3D4A50]">
+          <p>Sme remeselná kovovýroba z Prečína. Z kovu aj antikoru vyrábame kované brány, ploty, zábradlia, schodiská, prístrešky a mreže podľa vašich rozmerov a predstáv.</p>
+          <p>Ku každej zákazke pristupujeme individuálne. Pomôžeme s návrhom, bezplatne zameriame, vypracujeme cenovú ponuku a hotový výrobok aj namontujeme.</p>
+          <p>Vyrábame kusovo aj v sériách. Zároveň vykonávame rezanie a delenie plného a jaklového materiálu do 230 mm.</p>
+        </div>
+        <ul class="mt-8 space-y-4">
+          {points.map((point) => (
+            <li class="flex items-center gap-4">
+              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent/15 text-[#8C7A47] ring-1 ring-accent/50">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"></path></svg>
+              </span>
+              <span class="text-lg">{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

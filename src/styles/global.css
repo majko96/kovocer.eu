@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Roboto Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Roboto", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #0b171c;
+  --color-surface: #13242b;
+  --color-ink: #f3f1ec;
+  --color-muted: #a4acaf;
+  --color-accent: #c9b57e;
+  --color-accent2: #9e1b1f;
+
+  --container-container: 72rem;
+
+  --shadow-card:
+    0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent),
+    0 18px 40px -16px color-mix(in srgb, var(--color-ink) 22%, transparent);
+}
+
+@utility bg-spotlight {
+  background-image: radial-gradient(
+    ellipse 80% 60% at 50% -10%,
+    color-mix(in srgb, var(--color-accent) 35%, transparent),
+    transparent 70%
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* PhotoSwipe v tmavej palete webu */
+.pswp {
+  --pswp-bg: #050a0d;
+  --pswp-icon-color: #f3f1ec;
+  --pswp-icon-color-secondary: #050a0d;
+  --pswp-icon-stroke-color: #050a0d;
+  --pswp-root-z-index: 9999;
+}
+
+.pswp__counter {
+  font-family: var(--font-display);
+  letter-spacing: 0.28em;
+  color: var(--color-accent);
+}

@@ -1,0 +1,27 @@
+---
+const steps = [
+  { title: "Konzultácia a návrh", text: "Povedzte nám, čo potrebujete. Poradíme pri návrhu brány, plota, zábradlia či schodiska." },
+  { title: "Bezplatné zameranie", text: "Prídeme na miesto, zmeriame a vypracujeme cenovú ponuku." },
+  { title: "Výroba na mieru", text: "Vyrobíme z kovu alebo antikoru, žiarovo pozinkujeme a natrieme." },
+  { title: "Montáž", text: "Výrobok osadíme a na požiadanie aj s elektrickým pohonom NICE alebo KEY." },
+];
+---
+
+<section id="postup" class="scroll-mt-[calc(4.5rem-15px)] bg-surface py-20 text-ink md:scroll-mt-[calc(5.5rem-15px)] md:py-28">
+  <div class="mx-auto max-w-container px-6">
+    <header class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="font-display text-xs tracking-[0.32em] text-accent uppercase">Ako to prebieha</p>
+      <h2 class="mt-6 font-display text-4xl leading-[1.12] font-bold tracking-tight text-ink uppercase md:text-6xl">Od zamerania po montáž</h2>
+      <p class="mt-5 text-base leading-relaxed text-muted md:text-lg">Zameranie a cenová ponuka vás nestoja nič.</p>
+    </header>
+    <ol class="mt-14 grid gap-px overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/10 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+      {steps.map((step, i) => (
+        <li class="group bg-surface p-8 transition hover:bg-[#1A2F37]">
+          <span class="grid h-12 w-12 place-items-center rounded-full font-display text-lg font-bold text-accent ring-1 ring-accent/60 transition group-hover:bg-accent group-hover:text-bg">{i + 1}</span>
+          <h3 class="mt-6 font-display text-xl font-bold text-ink uppercase">{step.title}</h3>
+          <p class="mt-3 leading-relaxed text-muted">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

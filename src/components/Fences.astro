@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import spiraly from "../assets/photos/balkonove-zabradlie-spiraly.jpg";
+import hroty from "../assets/photos/plot-s-hrotmi-podmurovka.jpg";
+import terasa from "../assets/photos/terasa-zabradlie-gulocky.jpg";
+import drevo from "../assets/photos/plot-drevena-vyplna.jpg";
+import balkon from "../assets/photos/balkon-sive-zabradlie.jpg";
+
+const items = [
+  { src: spiraly, alt: "Vypuklé kované balkónové zábradlie so špirálami" },
+  { src: hroty, alt: "Kovaný plot s hrotmi na kamennej podmurovke" },
+  { src: terasa, alt: "Kované zábradlie s ozdobnými guľôčkami na terase" },
+  { src: drevo, alt: "Dlhý plot s drevenými vodorovnými latami medzi kamennými stĺpikmi" },
+  { src: balkon, alt: "Balkón rodinného domu so sivým kovaným zábradlím" },
+];
+---
+
+<section id="ploty-zabradlia" class="scroll-mt-[calc(4.5rem-15px)] bg-surface py-20 text-ink md:scroll-mt-[calc(5.5rem-15px)] md:py-28">
+  <div class="mx-auto max-w-container px-6">
+    <header class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="font-display text-xs tracking-[0.32em] text-accent uppercase">Ploty a zábradlia</p>
+      <h2 class="mt-6 font-display text-4xl leading-[1.12] font-bold tracking-tight text-ink uppercase md:text-6xl">
+        Kované ploty a <em class="text-accent not-italic">zábradlia</em> z kovu a antikoru
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-muted md:text-lg">
+        Plotové dielce s rôznymi výplňami, balkónové a terasové zábradlia, schodiská, prístrešky, mreže a ďalšie kovové konštrukcie.
+      </p>
+    </header>
+    <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      {items.map((item) => (
+        <div class="group relative block overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ring-1 ring-white/10 first:lg:col-span-2 first:lg:row-span-2">
+          <Image
+            src={item.src}
+            alt={item.alt}
+            data-lightbox
+            class="h-full min-h-64 w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+          <span aria-hidden="true" class="pointer-events-none absolute top-4 right-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-accent opacity-0 ring-1 ring-white/20 backdrop-blur-xl transition group-hover:opacity-100">⤢</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

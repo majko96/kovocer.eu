@@ -1,0 +1,155 @@
+---
+import Emblem from "./Emblem.astro";
+import { site } from "../data/site";
+
+const items = [
+  { label: "O nás", href: "/#o-nas" },
+  { label: "Ponuka", href: "/#brany-branky" },
+  { label: "Fotogaléria", href: "/#ploty-zabradlia" },
+];
+
+const linkClass =
+  "text-xs tracking-[0.18em] uppercase text-muted hover:text-ink px-3 py-2 transition-colors aria-[current=true]:text-accent hover:aria-[current=true]:text-accent";
+
+// Položky celoobrazovkového menu sa po otvorení postupne objavia (oneskorenie cez --d).
+const reveal =
+  "translate-y-4 opacity-0 transition duration-500 ease-out [transition-delay:var(--d)] group-data-[open]:translate-y-0 group-data-[open]:opacity-100";
+const mobileItems = [...items, { label: "Kontakt", href: "/#kontakt", accent: true }];
+---
+
+<header>
+  <nav aria-label="Hlavná navigácia" class="fixed top-0 left-0 z-[100] w-full border-b border-accent bg-bg">
+    <div class="mx-auto max-w-container px-6">
+      <div class="relative z-[70] flex items-center justify-between gap-6 py-4 md:py-5">
+        <a href="/" class="flex min-h-10 min-w-0 items-center gap-3 text-left" aria-label="KOVOCER.eu – domov" data-top data-nav-close>
+          <Emblem class="h-8 w-8 shrink-0 text-accent md:h-10 md:w-10" />
+          <span class="font-display text-lg leading-none font-bold tracking-[0.16em] text-ink md:text-2xl md:tracking-[0.2em]">KOVOCER<span class="font-normal tracking-[0.06em] text-accent">.eu</span></span>
+        </a>
+        <div class="flex items-center md:flex-1 md:justify-end md:gap-2">
+          <ul class="hidden items-center gap-1 md:flex">
+            {items.map((item) => (
+              <li><a class={linkClass} href={item.href} data-nav-link>{item.label}</a></li>
+            ))}
+          </ul>
+          <a
+            class="ml-2 hidden items-center rounded-md px-4 py-2 text-xs uppercase tracking-[0.18em] text-accent ring-1 ring-accent transition-colors hover:bg-accent/10 md:inline-flex"
+            href="/#kontakt">Kontakt</a
+          >
+          <button
+            type="button"
+            id="nav-toggle"
+            aria-label="Otvoriť menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            class="group relative -my-1 -mr-3 h-12 w-12 shrink-0 cursor-pointer touch-manipulation [-webkit-tap-highlight-color:transparent] md:hidden"
+          >
+            <span class="absolute top-[15px] right-3 h-0.5 w-6 rounded-full bg-ink transition-all duration-300 ease-out group-data-[open]:translate-y-[8px] group-data-[open]:rotate-45 group-data-[open]:bg-accent"></span>
+            <span class="absolute top-[23px] right-3 h-0.5 w-4 rounded-full bg-accent transition-all duration-300 ease-out group-data-[open]:w-6 group-data-[open]:scale-x-0 group-data-[open]:opacity-0"></span>
+            <span class="absolute top-[31px] right-3 h-0.5 w-2.5 rounded-full bg-ink transition-all duration-300 ease-out group-data-[open]:w-6 group-data-[open]:-translate-y-[8px] group-data-[open]:-rotate-45 group-data-[open]:bg-accent"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="mobile-menu"
+      class="group invisible fixed inset-0 z-[60] flex h-dvh flex-col overflow-y-auto bg-bg [scrollbar-width:none] [&::-webkit-scrollbar]:hidden opacity-0 transition duration-300 data-[open]:visible data-[open]:opacity-100 md:hidden"
+    >
+      <div class="pointer-events-none absolute inset-0 bg-[image:radial-gradient(ellipse_at_top,rgba(201,181,126,0.18),transparent_65%)]"></div>
+
+      <div class="relative flex flex-1 flex-col items-center justify-center px-6 pt-24 pb-6">
+        <ul class="flex flex-col items-center gap-8">
+          {mobileItems.map((item, i) => (
+            <li>
+              <a
+                href={item.href}
+                data-nav-close
+                class:list={[
+                  "block font-display text-4xl tracking-[0.14em] uppercase transition-colors",
+                  item.accent ? "text-accent" : "text-ink hover:text-accent",
+                  reveal,
+                ]}
+                style={`--d:${150 + i * 70}ms`}>{item.label}</a
+              >
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class={`relative border-t border-white/10 px-6 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-center ${reveal}`} style="--d:480ms">
+        <p class="font-display text-xs tracking-[0.32em] text-accent uppercase">Ozvite sa nám</p>
+        <a href={site.phoneHref} class="mt-5 flex items-center justify-center gap-3 font-display text-2xl tracking-[0.08em] text-ink">
+          <svg class="h-5 w-5 text-accent" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg>
+          {site.phone}
+        </a>
+        <a href={`mailto:${site.email}`} class="mt-3 flex items-center justify-center gap-3 text-base text-muted transition-colors hover:text-ink">
+          <svg class="h-5 w-5 text-accent" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+          {site.email}
+        </a>
+        <p class="mt-6 text-xs tracking-[0.2em] text-muted/80 uppercase">{site.owner} · {site.street}, {site.city}</p>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle") as HTMLButtonElement | null;
+  const menu = document.getElementById("mobile-menu");
+
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu) return;
+    toggle.toggleAttribute("data-open", open);
+    menu.toggleAttribute("data-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Zavrieť menu" : "Otvoriť menu");
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+
+  // Logo vráti na začiatok stránky bez znovunačítania.
+  document.querySelectorAll("[data-top]").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    }),
+  );
+
+  toggle?.addEventListener("click", () => setOpen(!menu?.hasAttribute("data-open")));
+  document.querySelectorAll("[data-nav-close]").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu?.hasAttribute("data-open")) {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+  window.matchMedia("(min-width: 768px)").addEventListener("change", (e) => {
+    if (e.matches) setOpen(false);
+  });
+
+  // Zvýrazni položku menu, ktorej sekcia je práve pod lištou (desktop).
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]")]
+    .map((a) => ({ a, target: document.getElementById(a.hash.slice(1)) }))
+    .filter((x): x is { a: HTMLAnchorElement; target: HTMLElement } => x.target !== null);
+  const sections = [...document.querySelectorAll<HTMLElement>("main > section[id]")];
+  const nav = document.querySelector("nav");
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const limit = (nav?.getBoundingClientRect().height ?? 0) + 8;
+    let current: string | null = null;
+    for (const s of sections) if (s.getBoundingClientRect().top <= limit) current = s.id;
+    for (const { a, target } of links) {
+      if (current === target.id) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    }
+  };
+  const request = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+  window.addEventListener("scroll", request, { passive: true });
+  window.addEventListener("resize", request);
+  update();
+</script>

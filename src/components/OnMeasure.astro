@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import arch from "../assets/photos/posuvna-brana-obluk-kamenne-stlpiky.jpg";
+import { site, button } from "../data/site";
+---
+
+<section id="na-mieru" class="relative isolate scroll-mt-[calc(4.5rem-15px)] overflow-hidden bg-bg py-24 text-center text-ink md:scroll-mt-[calc(5.5rem-15px)] md:py-36">
+  <Image src={arch} alt="" aria-hidden="true" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-35" loading="lazy" />
+  <div class="absolute inset-0 -z-10 bg-[image:radial-gradient(ellipse_at_top,rgba(201,181,126,0.22),transparent_60%),linear-gradient(to_bottom,rgba(11,23,28,0.6),#0B171C)]"></div>
+  <div class="mx-auto max-w-3xl px-6" data-reveal>
+    <p class="font-display text-xs tracking-[0.32em] text-accent uppercase">Cenová ponuka zdarma</p>
+    <h2 class="mt-6 font-display text-4xl leading-[1.12] font-bold uppercase sm:text-5xl md:text-7xl">
+      Brána presne <em class="text-accent not-italic">podľa vás</em>
+    </h2>
+    <p class="mt-6 text-lg leading-relaxed text-ink/80">
+      Bezplatne zameriame, pomôžeme s návrhom a vypracujeme cenovú ponuku. Postaráme sa aj o realizáciu a montáž elektrického pohonu brán NICE alebo KEY.
+    </p>
+    <a
+      href="/#dopyt"
+      class:list={[button, "mt-10 px-8 py-4 shadow-[0_0_50px_-6px_rgba(201,181,126,0.7)] hover:shadow-[0_0_70px_-4px_rgba(201,181,126,0.9)]"]}
+      >Objednať bezplatné zameranie →</a
+    >
+    <p class="mt-6 text-sm tracking-[0.14em] text-muted uppercase sm:tracking-[0.24em]">{site.owner} · <a href={site.phoneHref} class="-my-3 inline-block py-3 whitespace-nowrap transition-colors hover:text-accent">{site.phone}</a></p>
+  </div>
+</section>

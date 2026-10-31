@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import hero from "../assets/photos/kovocer-hero-kovany-plot.jpg";
+import { button } from "../data/site";
+---
+
+<section id="uvod" class="relative isolate flex min-h-[90vh] items-center overflow-hidden bg-bg pt-[4.5rem] text-ink md:pt-[5.5rem]">
+  <Image
+    src={hero}
+    alt="Kovaný plot so zdobeným stredovým motívom pred žltým rodinným domom"
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 -z-10 bg-linear-to-r from-bg via-bg/80 to-bg/20"></div>
+  <div class="absolute inset-0 -z-10 bg-linear-to-t from-bg via-transparent to-bg/50"></div>
+  <div class="mx-auto w-full max-w-container px-6 pt-32 pb-20 md:pt-40 md:pb-28" data-reveal>
+    <div class="max-w-4xl">
+      <p class="font-display text-xs tracking-[0.32em] text-accent md:text-sm">KOVOVÝROBA PREČÍN</p>
+      <h1 class="mt-6 font-display text-6xl leading-[1.1] font-black tracking-tight uppercase sm:text-7xl md:text-8xl lg:text-9xl">
+        <em class="text-accent not-italic">KOVANÉ BRÁNY A PLOTY NA MIERU</em>
+      </h1>
+      <p class="mt-8 max-w-xl font-body text-base leading-relaxed text-ink/80 md:text-lg">
+        Brány, ploty, zábradlia a schodiská z kovu aj antikoru. Vyrábame ich v našej dielni v Prečíne, žiarovo pozinkujeme a na požiadanie namontujeme aj s pohonom.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a
+          href="/#kontakt"
+          class:list={[button, "px-8 py-4 text-sm shadow-[0_0_40px_-6px_rgba(201,181,126,0.65)] hover:shadow-[0_0_60px_-4px_rgba(201,181,126,0.85)] md:text-base"]}
+          >Kontakt <span aria-hidden="true">→</span></a
+        >
+        <a
+          href="/#galeria"
+          class="inline-flex items-center gap-3 rounded-md px-8 py-4 font-display text-sm font-bold tracking-[0.14em] text-ink uppercase ring-1 ring-accent transition hover:bg-accent/10 md:text-base"
+          >Fotogaléria <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </div>
+  </div>
+</section>

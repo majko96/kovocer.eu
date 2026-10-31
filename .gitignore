@@ -1,0 +1,33 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# server backups dropped into the repo root
+*.zip
+
+# SMTP credentials — deploy manually to the server, never commit
+public/smtp-config.php
+
+# local design backups (colour variants)
+design/backups/

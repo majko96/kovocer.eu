@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import dvojkridlova from "../assets/photos/dvojkridlova-kovana-brana.jpg";
+import ruzica from "../assets/photos/branicka-s-ruzicou.jpg";
+import kruhy from "../assets/photos/brana-kruhove-motivy.jpg";
+import srdiecka from "../assets/photos/posuvna-brana-srdiecka.jpg";
+import schranka from "../assets/photos/branicka-so-schrankou.jpg";
+import tahokov from "../assets/photos/brana-z-tahokovu.jpg";
+
+const gates = [
+  { src: dvojkridlova, alt: "Dvojkrídlová kovaná vjazdová brána s ozdobami pred rodinným domom" },
+  { src: ruzica, alt: "Kovaná záhradná bránka s oblúkom a ozdobnou ružicou" },
+  { src: kruhy, alt: "Čierna kovaná vjazdová brána s ozdobnými kruhovými motívmi" },
+  { src: srdiecka, alt: "Posuvná kovaná vjazdová brána s ozdobnými srdiečkami" },
+  { src: schranka, alt: "Čierna kovaná bránka s krútenými prvkami a poštovou schránkou" },
+  { src: tahokov, alt: "Posuvná brána z ťahokovu" },
+];
+---
+
+<section id="brany-branky" class="scroll-mt-[calc(4.5rem-15px)] bg-[#F0F0F0] py-20 text-bg md:scroll-mt-[calc(5.5rem-15px)] md:py-28">
+  <div class="mx-auto max-w-container px-6">
+    <header class="mx-auto max-w-3xl text-center" data-reveal>
+      <p class="font-display text-xs tracking-[0.32em] text-[#8C7A47] uppercase">Brány</p>
+      <h2 class="mt-6 font-display text-4xl leading-[1.12] font-bold tracking-tight text-bg uppercase md:text-6xl">Kované brány na mieru</h2>
+      <p class="mt-5 text-base leading-relaxed text-[#3D4A50] md:text-lg">
+        Jednokrídlové a dvojkrídlové brány, posuvné, samonosné aj koľajnicové. Každú vyrábame na mieru. Kliknutím fotografiu zväčšíte.
+      </p>
+    </header>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      {gates.map((gate) => (
+        <article class="group overflow-hidden rounded-2xl rounded-tl-none bg-white shadow-[0_20px_50px_-25px_rgba(11,23,28,0.35)] transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_35px_70px_-25px_rgba(11,23,28,0.5)]">
+          <div class="relative overflow-hidden">
+            <Image
+              src={gate.src}
+              alt={gate.alt}
+              data-lightbox
+              class="aspect-[4/3] w-full cursor-zoom-in object-cover transition duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-bg/50 to-transparent opacity-0 transition group-hover:opacity-100"></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

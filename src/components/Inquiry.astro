@@ -1,0 +1,131 @@
+---
+import { site, button, formMode } from "../data/site";
+
+const link = formMode === "link";
+const smtp = formMode === "smtp";
+const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent("Dopyt z webu")}`;
+
+const field =
+  "w-full rounded-md border border-white/15 bg-surface px-4 py-3 text-ink placeholder-muted/70 outline-none transition-colors focus:border-accent";
+const label = "mb-1 block text-xs font-medium tracking-[0.18em] text-muted uppercase";
+---
+
+<section id="dopyt" class="relative isolate scroll-mt-[calc(4.5rem-15px)] overflow-hidden bg-bg py-24 text-center text-ink md:scroll-mt-[calc(5.5rem-15px)] md:py-36">
+  <div class="absolute inset-0 -z-10 bg-[image:radial-gradient(ellipse_at_top,rgba(201,181,126,0.22),transparent_60%),linear-gradient(to_bottom,rgba(11,23,28,0.6),#0B171C)]"></div>
+  <div class="mx-auto max-w-3xl px-6" data-reveal>
+    <p class="font-display text-xs tracking-[0.32em] text-accent uppercase">Dopyt</p>
+    <h2 class="mt-6 font-display text-4xl leading-[1.12] font-bold uppercase sm:text-5xl md:text-7xl">
+      Povedzte nám, čo <em class="text-accent not-italic">potrebujete</em>
+    </h2>
+    <p class="mt-6 text-lg leading-relaxed text-ink/80">
+      Pošlite nám rozmery, nápad alebo fotku miesta. Ozveme sa s návrhom a bezplatným zameraním.
+    </p>
+    {!link ? (
+      <button type="button" id="inquiry-open" class:list={[button, "mt-10 cursor-pointer px-8 py-4 shadow-[0_0_50px_-6px_rgba(201,181,126,0.7)] hover:shadow-[0_0_70px_-4px_rgba(201,181,126,0.9)]"]}>Napíšte nám</button>
+    ) : (
+      <a href={mailtoHref} class:list={[button, "mt-10 cursor-pointer px-8 py-4 shadow-[0_0_50px_-6px_rgba(201,181,126,0.7)] hover:shadow-[0_0_70px_-4px_rgba(201,181,126,0.9)]"]}>Napíšte nám</a>
+    )}
+    <p class="mt-6 text-sm tracking-[0.14em] text-muted uppercase sm:tracking-[0.24em]">Alebo zavolajte: <a href={site.phoneHref} class="-my-3 inline-block py-3 whitespace-nowrap transition-colors hover:text-accent">{site.phone}</a></p>
+  </div>
+
+  {!link && (
+  <dialog
+    id="inquiry-dialog"
+    aria-labelledby="inquiry-title"
+    class="m-auto w-[min(100%-2rem,34rem)] rounded-2xl bg-bg p-0 text-left text-ink shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] ring-1 ring-accent/40 backdrop:bg-black/80"
+  >
+    <div class="relative p-8">
+      <button type="button" id="inquiry-close" aria-label="Zavrieť" class="absolute top-3 right-4 cursor-pointer p-2 text-3xl leading-none text-ink/70 hover:text-ink">&times;</button>
+      <h3 id="inquiry-title" class="font-display text-3xl font-bold text-ink uppercase">Napíšte nám</h3>
+      <p class="mt-1 text-sm text-muted">Ozveme sa čo najskôr.</p>
+      <form id="inquiry-form" class="mt-6 space-y-4" data-mode={formMode} data-email={site.email}>
+        {smtp && <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />}
+        <div>
+          <label for="inq-name" class={label}>Meno a priezvisko</label>
+          <input id="inq-name" name="name" type="text" required autocomplete="name" class={field} placeholder="Vaše meno" />
+        </div>
+        <div class:list={["grid gap-4", smtp && "sm:grid-cols-2"]}>
+          {smtp && <div>
+            <label for="inq-email" class={label}>E-mail</label>
+            <input id="inq-email" name="email" type="email" required autocomplete="email" class={field} placeholder="vas@email.sk" />
+          </div>}
+          <div>
+            <label for="inq-phone" class={label}>Telefón</label>
+            <input id="inq-phone" name="phone" type="tel" autocomplete="tel" class={field} placeholder="09xx xxx xxx" />
+          </div>
+        </div>
+        <div>
+          <label for="inq-message" class={label}>Správa</label>
+          <textarea id="inq-message" name="message" rows="5" required class={field} placeholder="Čo potrebujete vyrobiť? Rozmery, nápad…"></textarea>
+        </div>
+        <button
+          id="inquiry-submit"
+          type="submit"
+          class:list={[button, "cursor-pointer px-8 py-3.5 text-sm disabled:opacity-60"]}>Odoslať</button
+        >
+        <p id="inquiry-status" class="text-sm text-muted" role="status"></p>
+      </form>
+    </div>
+  </dialog>
+  )}
+</section>
+
+<script>
+  const dialog = document.getElementById("inquiry-dialog") as HTMLDialogElement | null;
+  const form = document.getElementById("inquiry-form") as HTMLFormElement | null;
+  const submitBtn = document.getElementById("inquiry-submit") as HTMLButtonElement | null;
+  const status = document.getElementById("inquiry-status");
+
+  document.getElementById("inquiry-open")?.addEventListener("click", () => dialog?.showModal());
+  document.getElementById("inquiry-close")?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  const setStatus = (text: string, color = "") => {
+    if (!status) return;
+    status.textContent = text;
+    status.style.color = color;
+  };
+
+  // Vetva "mailto": otvorí e-mailového klienta s predvyplnenou správou.
+  const openMailClient = (data: FormData, to: string) => {
+    const name = String(data.get("name") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    const lines = [`Meno: ${name}`];
+    if (phone) lines.push(`Telefón: ${phone}`);
+    const body = [...lines, "", message].join("\r\n");
+    const subject = `Dopyt z webu — ${name}`;
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus(`Otvárame váš e-mailový program. Ak sa nič neotvorí, napíšte nám na ${to}.`);
+  };
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (form.dataset.mode === "mailto") {
+      openMailClient(new FormData(form), form.dataset.email ?? "");
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    setStatus("Odosielam…");
+
+    try {
+      const response = await fetch("/sendEmail.php", { method: "POST", body: new FormData(form) });
+      const result = await response.json();
+
+      if (result.status === "success") {
+        form.reset();
+        setStatus(result.response || "Vaša správa bola odoslaná.", "#4ade80");
+      } else {
+        setStatus(result.response || "Správu sa nepodarilo odoslať, skúste to prosím neskôr.", "#f87171");
+      }
+    } catch {
+      setStatus("Správu sa nepodarilo odoslať. Skúste to prosím neskôr alebo nám zavolajte.", "#f87171");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+</script>

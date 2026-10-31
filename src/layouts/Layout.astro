@@ -1,0 +1,117 @@
+---
+import "../styles/global.css";
+import { faqs } from "../data/faqs";
+import ogImage from "../assets/photos/kovocer-hero-kovany-plot.jpg";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Kovocer: výroba kovaných plotov, brán a zábradlí z kovu a antikoru | Prečín",
+  description = "Kovocer, Prečín: výroba kovaných plotov, brán, zábradlí, prístreškov, mreží a schodísk z kovu aj antikoru. Žiarové pozinkovanie, montáž elektrických pohonov brán NICE, KEY, bezplatné zameranie a cenová ponuka.",
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://www.kovocer.eu";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage.src, Astro.site).toString();
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+  "@id": `${siteUrl}/#business`,
+  name: "KOVOCER.eu",
+  description,
+  url: `${siteUrl}/`,
+  image: ogImageUrl,
+  telephone: "+421911782251",
+  email: "kovocer@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Prečín 447",
+    postalCode: "018 15",
+    addressLocality: "Prečín",
+    addressCountry: "SK",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    name: "Pavol Čerňanský",
+    telephone: "+421911782251",
+    email: "kovocer@gmail.com",
+    availableLanguage: "sk",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Kovové výrobky na mieru",
+    itemListElement: [
+      "Jednokrídlové a dvojkrídlové brány",
+      "Posuvné, samonosné a koľajnicové brány",
+      "Plotové dielce a ich výplne",
+      "Zábradlia",
+      "Prístrešky, mreže a konštrukcie",
+      "Schodiská",
+      "Montáž elektrických pohonov brán NICE, KEY",
+    ].map((name) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name },
+    })),
+  },
+};
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+---
+
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="KOVOCER.eu" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sk_SK" />
+    <meta property="og:site_name" content="KOVOCER.eu" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="Kovaný plot so zdobeným stredovým motívom pred žltým rodinným domom" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqData)} />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      import "../scripts/reveal.js";
+      import "../scripts/lightbox.js";
+    </script>
+  </body>
+</html>
