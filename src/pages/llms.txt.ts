@@ -1,4 +1,7 @@
-# KOVOCER.eu
+import type { APIRoute } from "astro";
+
+export const GET: APIRoute = ({ site }) => {
+  const body = `# KOVOCER.eu
 
 > Výroba kovaných plotov, brán, zábradlí, prístreškov, mreží a schodísk z kovu aj antikoru v Prečíne. Výrobky žiarovo pozinkujeme a natrieme, montujeme elektrické pohony brán NICE a KEY. Zameranie a cenová ponuka zdarma.
 
@@ -20,4 +23,7 @@
 
 ## Stránky
 
-- [Web](https://www.kovocer.eu/): Úvod, ponuka brán a plotov, fotogaléria realizácií a kontakt.
+- [Web](${site}): Úvod, ponuka brán a plotov, fotogaléria realizácií a kontakt.
+`;
+  return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+};

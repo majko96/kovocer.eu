@@ -39,11 +39,12 @@ src/
     faqs.ts          FAQ content (used both for the page and for FAQPage JSON-LD)
   layouts/Layout.astro   <head>: SEO meta, Open Graph, JSON-LD (LocalBusiness + FAQPage)
   pages/index.astro  Page composition (the order of the sections)
+  pages/robots.txt.ts, llms.txt.ts   Generated from the configured SITE_URL
   scripts/           reveal.js (scroll animations), lightbox.js (PhotoSwipe setup)
   styles/global.css  Tailwind theme tokens (colours, fonts) and global styles
 public/
   og-image.png       Open Graph / Twitter preview image (1200x630)
-  favicon.svg, robots.txt, llms.txt
+  favicon.svg
   sendEmail.php, PHPMailer/, smtp-config.example.php   Optional SMTP mailer
 design/
   logos/             Logo concepts (SVG)
@@ -94,7 +95,15 @@ Alternatively copy `public/smtp-config.example.php` to `public/smtp-config.php` 
 
 ## SEO
 
-- The canonical site URL is set in `astro.config.mjs` (`site`). Change it if the production domain changes; canonical links, the sitemap, Open Graph URLs and JSON-LD all derive from it.
+- The public origin is read at **build time** from the `SITE_URL` environment variable (default `https://www.kovocer.eu`, see `astro.config.mjs`). Canonical links, the sitemap, `robots.txt`, `llms.txt`, Open Graph URLs and JSON-LD all derive from it.
+- Set `NOINDEX=true` on staging/test deployments: it adds `noindex, nofollow` to every page and makes `robots.txt` disallow everything.
+
+  ```sh
+  # example: staging build
+  SITE_URL=https://kovocer.mariobabinec.sk NOINDEX=true npm run build
+  ```
+
+  Both variables can also be placed in a `.env` file in the project root (git-ignored). On HostCreators, put them into the app's `.env` content.
 - `@astrojs/sitemap` generates `sitemap-index.xml` on every build; `public/robots.txt` points to it.
 - `public/llms.txt` is a short machine-readable summary of the business.
 - Structured data (LocalBusiness and FAQPage) lives in `src/layouts/Layout.astro`.
@@ -122,7 +131,7 @@ The site is deployed from the `main` branch through a HostCreators "Git applicat
    npm install
    npm run build
    ```
-4. Add the `SMTP_*` variables in the app's `.env` section **only** if you switched `formMode` to `smtp`.
+4. Add environment variables in the app's `.env` section: `SITE_URL` (and `NOINDEX=true` for a staging subdomain). Add the `SMTP_*` variables **only** if you switched `formMode` to `smtp`.
 5. Push to `main` (or press "Run application") to deploy. The very first request after a deploy can still return the old state for a few minutes while the web server configuration refreshes.
 
 ## Conventions

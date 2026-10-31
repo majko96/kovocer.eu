@@ -134,7 +134,7 @@ try {
     $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
     $safePhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
     $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
-    $siteUrl = 'https://www.kovocer.eu';
+    $siteUrl = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'www.kovocer.eu');
 
     $phoneDisplay = $safePhone !== '' ? $safePhone : '—';
 
